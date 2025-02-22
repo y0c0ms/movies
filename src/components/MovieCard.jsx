@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../css/MovieCard.css";
 import { useMovieContext } from "../contexts/MovieContext";
+import StarRating from "./StarRating"; 
 
 function MovieCard({ movie, favoritePage }) {
   const { isFavorite, addToFavorites, removeFromFavorites, updateFavoriteRating } = useMovieContext();
@@ -11,13 +12,6 @@ function MovieCard({ movie, favoritePage }) {
     e.preventDefault();
     if (favorite) removeFromFavorites(movie.id);
     else addToFavorites(movie);
-  }
-
-  function handleRatingChange(e) {
-    const rating = Number(e.target.value);
-    if (rating >= 0 && rating <= 10) {
-      updateFavoriteRating(movie.id, rating);
-    }
   }
 
   return (
@@ -44,16 +38,12 @@ function MovieCard({ movie, favoritePage }) {
         <h3>{movie.title}</h3>
         <p>{movie.release_date?.split("-")[0]}</p>
       </div>
-      {/* Se estivermos na página de favoritos e o mouse estiver sobre o cartão, exibe o campo de nota */}
+      {/* Exibe o componente de avaliação por estrelas apenas na página de favoritos */}
       {favoritePage && isHovered && (
         <div className="rating-field">
-          <input
-            type="number"
-            min="0"
-            max="10"
-            value={movie.rating ?? ""}
-            onChange={handleRatingChange}
-            placeholder="Nota 0-10"
+          <StarRating
+            rating={movie.rating || 0}
+            setRating={(val) => updateFavoriteRating(movie.id, val)}
           />
         </div>
       )}
