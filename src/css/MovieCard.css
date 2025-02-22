@@ -106,7 +106,11 @@
   font-size: 0.9rem;
   margin-top: auto;
 }
-
+.rating-field {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px; /* opcional, para dar um espaço acima */
+}
 @media (max-width: 768px) {
   .movie-card {
     font-size: 0.9rem;
